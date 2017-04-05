@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Media;
 
 namespace assignment04
 {
@@ -71,24 +72,39 @@ namespace assignment04
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (StartFlag == false)
+
+			int opacity = 200;
+			parent.Render(e.Graphics);
+			Color winRectCol = Color.FromArgb(opacity, Color.LightBlue);
+			Brush brush = new SolidBrush(winRectCol);
+			Font text = new Font("Ubuntu", Math.Min(ClientSize.Width, ClientSize.Height) / 30);
+
+			if (Program.CurrentLevel == Properties.Resources.LevelStart)
 			{
-				//e.Graphics.DrawImage(Properties.Resources.StartMenu, 0, 0, ClientSize.Width, ClientSize.Height);
-				e.Graphics.FillRectangle(Brushes.Blue, 0, 0, ClientSize.Width, ClientSize.Height);
+				StringFormat stringFormat = new StringFormat();
+				stringFormat.Alignment = StringAlignment.Center;
+				stringFormat.LineAlignment = StringAlignment.Center;
+				int x = ClientSize.Width / 2;
+				int y = ClientSize.Height / 2;
+				e.Graphics.DrawString("Welcome to Sokoban!", text, Brushes.Blue, x, y - 100, stringFormat);
+				e.Graphics.DrawString("Press Space to Play", text, Brushes.Blue, x, y - 50, stringFormat);
+				e.Graphics.DrawString("Press C to Change your Character", text, Brushes.Blue, x, y, stringFormat);
 			}
-			else
+			if(Program.CurrentLevel == Properties.Resources.WinGame)
 			{
-				int opacity = 200;
-				parent.Render(e.Graphics);
-				Color winRectCol = Color.FromArgb(opacity, Color.LightBlue);
-				Brush brush = new SolidBrush(winRectCol);
-				if (Program.WinGame)
-				{
-					e.Graphics.FillRectangle(brush, 0, 0, ClientSize.Width, ClientSize.Height);
-					Font text = new Font("Ubuntu", Math.Min(ClientSize.Width, ClientSize.Height) / 30);
-					e.Graphics.DrawString("You Win!", text, Brushes.Black, ClientSize.Height / 4, ClientSize.Width / 2 - 50);
-					e.Graphics.DrawString("Press N to Go on to the Next Level", text, Brushes.Black, ClientSize.Height / 4, ClientSize.Width / 2 - 25);
-				}
+				StringFormat stringFormat = new StringFormat();
+				stringFormat.Alignment = StringAlignment.Center;
+				stringFormat.LineAlignment = StringAlignment.Center;
+				int x = ClientSize.Width / 2;
+				int y = ClientSize.Height / 2;
+				e.Graphics.DrawString("Congratz! You win!", text, Brushes.Blue, x, y - 100, stringFormat);
+				e.Graphics.DrawString("Press Q to Restart.", text, Brushes.Blue, x, y - 50, stringFormat);
+			}
+			if (Program.WinGame)
+			{
+				e.Graphics.FillRectangle(brush, 0, 0, ClientSize.Width, ClientSize.Height);
+				e.Graphics.DrawString("You Win!", text, Brushes.Black, ClientSize.Height / 4, ClientSize.Width / 2 - 50);
+				e.Graphics.DrawString("Press N to Go on to the Next Level", text, Brushes.Black, ClientSize.Height / 4, ClientSize.Width / 2 - 25);
 			}
 		}
 

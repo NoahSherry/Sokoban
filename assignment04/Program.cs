@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace assignment04
@@ -11,69 +13,130 @@ namespace assignment04
 		public static SlideSprite[,] walls;
 		public static SlideSprite[,] blocks;
 		public static Sprite[,] floors;
-		public static string CurrentLevel = Properties.Resources.Level1;
+		public static SoundPlayer juke = new SoundPlayer(Properties.Resources.Shop);
+		public static string CurrentLevel = Properties.Resources.LevelStart;
+		public static Bitmap CurrentPlayer = Properties.Resources.player;
 		public static int x;
 		public static int y;
 		public static int width;
 		public static int height;
 		public static bool WinGame = false;
-		public static int LevelCount = 1;
+		public static int LevelCount = 2;
+		public static int PlayerCount = 1;
+		public static int MoveCount = 0;
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Right)
+			#region Blah Blah Main Key Events
+			if (StartFlag || !(CurrentLevel == Properties.Resources.WinGame))
 			{
-				if (canMoveTo(x + 1, y, 1, 0)) x++;
-				if (blocks[x, y] != null) moveBlock(x, y, 1, 0);
-			}
-
-			if(e.KeyCode == Keys.N)
-			{
-				if(WinGame)
+				if (e.KeyCode == Keys.N)
 				{
-					LevelCount++;
-					switch (LevelCount)
+					if (WinGame)
 					{
-						case 1:
-							CurrentLevel = Properties.Resources.Level1;
-							break;
-						case 2:
-							CurrentLevel = Properties.Resources.Level2;
-							break;
-						case 3:
-							CurrentLevel = Properties.Resources.Level3;
-							LevelCount = 0;
-							break;
+						LevelCount++;
+						switch (LevelCount)
+						{
+							case 1:
+								CurrentLevel = Properties.Resources.LevelStart;
+								juke = new SoundPlayer(Properties.Resources.Shop);
+								juke.PlayLooping();
+								break;
+							case 2:
+								CurrentLevel = Properties.Resources.Level1;
+								juke = new SoundPlayer(Properties.Resources.Sonic);
+								juke.PlayLooping();
+								break;
+							case 3:
+								CurrentLevel = Properties.Resources.Level2;
+								juke = new SoundPlayer(Properties.Resources.SpiderDance);
+								juke.PlayLooping();
+								break;
+							case 4:
+								CurrentLevel = Properties.Resources.Level3;
+								juke = new SoundPlayer(Properties.Resources.Megalovania);
+								juke.PlayLooping();
+								break;
+							case 5:
+								CurrentLevel = Properties.Resources.WinGame;
+								juke = new SoundPlayer(Properties.Resources.RadioB);
+								juke.PlayLooping();
+								LevelCount = 0;
+								break;
+						}
+						WinGame = false;
+						StartGame();
 					}
-					WinGame = false;
+
+				}
+				if(e.KeyCode == Keys.Q)
+				{
+					CurrentLevel = Properties.Resources.LevelStart;
+					juke = new SoundPlayer(Properties.Resources.Shop);
+					juke.PlayLooping();
+					StartFlag = false;
 					StartGame();
 				}
-				
+				if (e.KeyCode == Keys.Right)
+				{
+					if (canMoveTo(x + 1, y, 1, 0)) x++;
+					if (blocks[x, y] != null) moveBlock(x, y, 1, 0);
+				}
+				if (e.KeyCode == Keys.Left)
+				{
+					if (canMoveTo(x - 1, y, -1, 0)) x--;
+					if (blocks[x, y] != null) moveBlock(x, y, -1, 0);
+				}
+				if (e.KeyCode == Keys.Up)
+				{
+					if (canMoveTo(x, y - 1, 0, -1)) y--;
+					if (blocks[x, y] != null) moveBlock(x, y, 0, -1);
+				}
+				if (e.KeyCode == Keys.Down)
+				{
+					if (canMoveTo(x, y + 1, 0, 1)) y++;
+					if (blocks[x, y] != null) moveBlock(x, y, 0, 1);
+				}
 			}
-
-			if (e.KeyCode == Keys.Left)
+			if (!StartFlag)
 			{
-				if (canMoveTo(x - 1, y, -1, 0)) x--;
-				if (blocks[x, y] != null) moveBlock(x, y, -1, 0);
-			}
-			if (e.KeyCode == Keys.Up)
-			{
-				if (canMoveTo(x, y - 1, 0, -1)) y--;
-				if (blocks[x, y] != null) moveBlock(x, y, 0, -1);
-			}
-			if (e.KeyCode == Keys.Down)
-			{
-				if (canMoveTo(x, y + 1, 0, 1)) y++;
-				if (blocks[x, y] != null) moveBlock(x, y, 0, 1);
-			}
-			if(e.KeyCode == Keys.Space)
-			{
-				StartFlag = true;
+				if (e.KeyCode == Keys.C)
+				{
+					PlayerCount++;
+					switch (PlayerCount)
+					{
+						case 1:
+							CurrentPlayer = Properties.Resources.player;
+							player.Image = Properties.Resources.player;
+							break;
+						case 2:
+							CurrentPlayer = Properties.Resources.player1;
+							player.Image = Properties.Resources.player1;
+							break;
+						case 3:
+							CurrentPlayer = Properties.Resources.player2;
+							player.Image = Properties.Resources.player2;
+							break;
+						case 4:
+							CurrentPlayer = Properties.Resources.player3;
+							player.Image = Properties.Resources.player3;
+							PlayerCount = 0;
+							break;
+					}
+				}
+				if (e.KeyCode == Keys.Space)
+				{
+					CurrentLevel = Properties.Resources.Level1;
+					juke = new SoundPlayer(Properties.Resources.Sonic);
+					StartFlag = true;
+					StartGame();
+				}
 			}
 			if(e.KeyCode == Keys.R)
 			{
 				StartGame();
 			}
+			#endregion
 			player.TargetX = x * 100;
 			player.TargetY = y * 100;
 		}
@@ -107,6 +170,7 @@ namespace assignment04
 		public static void StartGame()
 		{
 			parent.children.Clear();
+			juke.PlayLooping();
 			String map = CurrentLevel;
 			String[] lines = map.Split('\n');
 			width = 10;
@@ -128,6 +192,12 @@ namespace assignment04
 						goals[i, j].correct = true;
 						Program.parent.Add(goals[i, j]);
 					}
+					if (lines[j][i] == 'p')
+					{
+						walls[i, j] = new SlideSprite(Properties.Resources.party, i * 100, j * 100);
+						walls[i, j].correct = true;
+						Program.parent.Add(walls[i, j]);
+					}
 					if (lines[j][i] == 'w')
 					{
 						walls[i, j] = new SlideSprite(Properties.Resources.wall, i * 100, j * 100);
@@ -146,7 +216,7 @@ namespace assignment04
 					}
 					if (lines[j][i] == 'c')
 					{
-						player = new SlideSprite(Properties.Resources.player, i * 100, j * 100);
+						player = new SlideSprite(CurrentPlayer, i * 100, j * 100);
 
 						x = i;
 						y = j;
@@ -174,16 +244,14 @@ namespace assignment04
 
 		public Boolean CheckWin()
 		{
-			Console.WriteLine("Call");
 			Boolean win = true;
 			foreach(Sprite i in parent.children)
 			{
 				if(i.isSlideSprite)
 				{
-					if (i.correct == false)
+					if (!i.correct)
 					{
 						win = false;
-						Console.WriteLine(i.Image.ToString());
 					}
 				}
 			}

@@ -114,6 +114,96 @@
   <ItemGroup>
     <None Include="Resources\ground_05.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crate_03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crate_38.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\environment_04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LevelStart.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ground_06.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\block_05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trump-face-png-13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face_PNG5660.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main-qimg-a41f2bfce19c4e4fab789d1c3ab88b9d.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fcedf49f6eaf2176e2f788e568304f57.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Darude_-_Sandstorm_Radio_Edit_.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GameStart.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toby_fox_-_UNDERTALE_Soundtrack_-_54_Hotel.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Zelda-_Twilight_Princess_Music_-_Midnas_Lament.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\The_Legend_of_Zelda_-_The_Wind_Waker_-_31_-_Ocean.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\107_Radio_Tune_B.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Wii_-_Shop.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_Shop.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sonic_the_Hedgehog-Green_Hill_Zone_Theme.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toby fox - UNDERTALE Soundtrack - 59 Spider Dance.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tetris.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spider-Web-PNG-File.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toby_fox_-_UNDERTALE_Soundtrack_-_100_MEGALOVANIA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\party.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LevelStart1.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

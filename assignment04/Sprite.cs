@@ -97,10 +97,14 @@ public class Sprite
 	{
 		X = TargetX;
 		Y = TargetY;
-		foreach (Sprite s in children)
+		try
 		{
-			s.Act();
+			foreach (Sprite s in children)
+			{
+				s.Act();
+			}
 		}
+		catch { }
 	}
 
 	public void Add(Sprite s)
